@@ -141,7 +141,7 @@ export default function ModelComparison() {
 
   useEffect(() => {
 
-    fetch("http://127.0.0.1:8000/model-comparison")
+    fetch("https://genetic-mutation-disease-classification.onrender.com/model-comparison")
       .then(res => res.json())
       .then(result => {
         setData(result);

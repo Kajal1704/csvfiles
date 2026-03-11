@@ -170,7 +170,7 @@ const Explainability = () => {
   // ================= GLOBAL SHAP =================
   useEffect(() => {
 
-    fetch("http://127.0.0.1:8000/explain")
+    fetch("https://genetic-mutation-disease-classification.onrender.com/explain")
       .then((res) => res.json())
       .then((data) => {
         setGlobalPlots(data);
@@ -198,7 +198,7 @@ const Explainability = () => {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/explain-local",
+        "https://genetic-mutation-disease-classification.onrender.com/explain-local",
         {
           method: "POST",
           body: formData
