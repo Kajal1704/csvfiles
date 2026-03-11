@@ -861,66 +861,66 @@ def explain():
 #         return {"error": str(e)}
 
 
-# # ============================
-# # MODEL COMPARISON
-# # ============================
-# @app.get("/model-comparison")
-# def model_comparison():
+# ============================
+# MODEL COMPARISON
+# ============================
+@app.get("/model-comparison")
+def model_comparison():
 
-#     try:
-#         import seaborn as sns
-#         from sklearn.metrics import confusion_matrix
-#         from sklearn.ensemble import RandomForestClassifier
+    try:
+        import seaborn as sns
+        from sklearn.metrics import confusion_matrix
+        from sklearn.ensemble import RandomForestClassifier
 
-#         df = pd.read_csv("rf_training_dataset.csv")
+        df = pd.read_csv("rf_training_dataset.csv")
 
-#         X = df[feature_columns]
-#         y = label_encoder.transform(df["disease"])
+        X = df[feature_columns]
+        y = label_encoder.transform(df["disease"])
 
-#         # XGBoost
-#         xgb_preds = model.predict(X)
-#         xgb_cm = confusion_matrix(y, xgb_preds)
-#         xgb_acc = (xgb_preds == y).mean()
+        # XGBoost
+        xgb_preds = model.predict(X)
+        xgb_cm = confusion_matrix(y, xgb_preds)
+        xgb_acc = (xgb_preds == y).mean()
 
-#         plt.figure()
-#         sns.heatmap(xgb_cm, annot=True, fmt="d", cmap="Blues")
-#         plt.title("XGBoost Confusion Matrix")
+        plt.figure()
+        sns.heatmap(xgb_cm, annot=True, fmt="d", cmap="Blues")
+        plt.title("XGBoost Confusion Matrix")
 
-#         buf = BytesIO()
-#         plt.savefig(buf, format="png")
-#         buf.seek(0)
+        buf = BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
 
-#         xgb_img = base64.b64encode(buf.read()).decode("utf-8")
-#         plt.close()
+        xgb_img = base64.b64encode(buf.read()).decode("utf-8")
+        plt.close()
 
-#         # Random Forest
-#         rf = RandomForestClassifier(random_state=42)
-#         rf.fit(X, y)
+        # Random Forest
+        rf = RandomForestClassifier(random_state=42)
+        rf.fit(X, y)
 
-#         rf_preds = rf.predict(X)
-#         rf_cm = confusion_matrix(y, rf_preds)
-#         rf_acc = (rf_preds == y).mean()
+        rf_preds = rf.predict(X)
+        rf_cm = confusion_matrix(y, rf_preds)
+        rf_acc = (rf_preds == y).mean()
 
-#         plt.figure()
-#         sns.heatmap(rf_cm, annot=True, fmt="d", cmap="Greens")
-#         plt.title("Random Forest Confusion Matrix")
+        plt.figure()
+        sns.heatmap(rf_cm, annot=True, fmt="d", cmap="Greens")
+        plt.title("Random Forest Confusion Matrix")
 
-#         buf = BytesIO()
-#         plt.savefig(buf, format="png")
-#         buf.seek(0)
+        buf = BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
 
-#         rf_img = base64.b64encode(buf.read()).decode("utf-8")
-#         plt.close()
+        rf_img = base64.b64encode(buf.read()).decode("utf-8")
+        plt.close()
 
-#         return {
-#             "rf_accuracy": round(rf_acc * 100, 2),
-#             "xgb_accuracy": round(xgb_acc * 100, 2),
-#             "rf_confusion_matrix": rf_img,
-#             "xgb_confusion_matrix": xgb_img
-#         }
+        return {
+            "rf_accuracy": round(rf_acc * 100, 2),
+            "xgb_accuracy": round(xgb_acc * 100, 2),
+            "rf_confusion_matrix": rf_img,
+            "xgb_confusion_matrix": xgb_img
+        }
 
-#     except Exception as e:
-#         return {"error": str(e)}
+    except Exception as e:
+        return {"error": str(e)}
 @app.post("/explain-local")
 async def explain_local(file: UploadFile = File(...)):
 
