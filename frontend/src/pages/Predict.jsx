@@ -440,60 +440,95 @@ export default function Predict() {
           </div>
 
 
-          {/* RIGHT CARD */}
           <div className="bg-white rounded-xl shadow-sm p-8 flex flex-col justify-center items-center text-center">
 
-            {prediction ? (
+  {prediction ? (
 
-              <>
-                <div className="text-5xl mb-4">🧬</div>
+    <>
+      <div className="text-5xl mb-4">🧬</div>
 
-                <h4 className="text-lg font-semibold text-gray-700">
-                  Prediction Results
-                </h4>
+      <h4 className="text-lg font-semibold text-gray-700">
+        Prediction Results
+      </h4>
 
-                <div className="mt-6 space-y-2">
+      {/* Disease */}
+      <div className="mt-4 text-2xl font-bold text-green-700">
+        {diseaseMap[prediction.prediction] || prediction.prediction}
+      </div>
 
-                  <div className="text-xl font-bold text-green-700">
+      {/* Risk Level Badge */}
+      <div className="mt-4">
+        <span className="text-sm text-gray-500">Risk Level:</span>
 
-                    {diseaseMap[prediction.prediction] || prediction.prediction}
+        <span
+          className={`ml-2 px-3 py-1 rounded-full text-white text-sm
+          ${
+            prediction.features_used.Risk_Score > 1.2
+              ? "bg-red-500"
+              : prediction.features_used.Risk_Score > 0.8
+              ? "bg-yellow-500"
+              : "bg-green-500"
+          }`}
+        >
+          {
+            prediction.features_used.Risk_Score > 1.2
+              ? "High Risk"
+              : prediction.features_used.Risk_Score > 0.8
+              ? "Medium Risk"
+              : "Low Risk"
+          }
+        </span>
+      </div>
 
-                  </div>
+     
 
-                  <div className="text-sm text-gray-500">
-                    Risk Score: {prediction.features_used.Risk_Score}
-                  </div>
+      {/* Feature Cards */}
+      <div className="grid grid-cols-3 gap-4 mt-6 w-full">
 
-                  <div className="text-sm text-gray-500">
-                    Mutation Status: {prediction.features_used.Mutation_Status}
-                  </div>
+        <div className="bg-[#f1f5f8] p-3 rounded-lg">
+          <p className="text-xs text-gray-500">Risk Score</p>
+          <p className="font-semibold">
+            {prediction.features_used.Risk_Score.toFixed(3)}
+          </p>
+        </div>
 
-                  <div className="text-sm text-gray-500">
-                    Clinical Significance: {prediction.features_used.Clinical_Significance}
-                  </div>
+        <div className="bg-[#f1f5f8] p-3 rounded-lg">
+          <p className="text-xs text-gray-500">Mutation</p>
+          <p className="font-semibold">
+            {prediction.features_used.Mutation_Status ? "Detected" : "None"}
+          </p>
+        </div>
 
-                </div>
+        <div className="bg-[#f1f5f8] p-3 rounded-lg">
+          <p className="text-xs text-gray-500">Clinical</p>
+          <p className="font-semibold">
+            {prediction.features_used.Clinical_Significance ? "Pathogenic" : "Benign"}
+          </p>
+        </div>
 
-              </>
+      </div>
 
-            ) : (
+      
 
-              <>
-                <div className="text-5xl text-gray-300 mb-4">🧪</div>
+    </>
 
-                <h4 className="text-lg font-semibold text-gray-700">
-                  No prediction yet
-                </h4>
+  ) : (
 
-                <p className="text-gray-500 mt-2">
-                  Upload a CSV file and click "Predict Disease"
-                </p>
-              </>
+    <>
+      <div className="text-5xl text-gray-300 mb-4">🧪</div>
 
-            )}
+      <h4 className="text-lg font-semibold text-gray-700">
+        No prediction yet
+      </h4>
 
-          </div>
+      <p className="text-gray-500 mt-2">
+        Upload a CSV file and click "Predict Disease"
+      </p>
+    </>
 
+  )}
+
+</div>
         </div>
 
       </div>

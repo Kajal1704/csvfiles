@@ -162,9 +162,23 @@ export default function ModelComparison() {
 
     <div className="min-h-screen bg-gray-50 px-10 py-10">
 
-      <h1 className="text-3xl font-bold mb-10">
-        Model Performance Comparison
-      </h1>
+      <h1 className="text-3xl font-bold mb-4">
+  Model Performance Comparison
+</h1>
+
+<div className="bg-green-50 border-l-4 border-green-500 p-5 rounded-lg mb-8">
+
+  <p className="text-gray-700 text-base leading-relaxed">
+    This section compares the performance of the machine learning models used for disease prediction.
+    Both Random Forest and XGBoost were evaluated using confusion matrix analysis.
+  </p>
+
+  <p className="text-gray-700 text-base leading-relaxed mt-2">
+    The results show that XGBoost provides more accurate and consistent predictions across different disease classes.
+    Therefore, XGBoost was selected as the final model for deployment.
+  </p>
+
+</div>
 
       <div className="grid grid-cols-2 gap-8">
 
