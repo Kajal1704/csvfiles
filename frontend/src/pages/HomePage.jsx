@@ -264,10 +264,13 @@ export default function HomePage() {
               Start Prediction
             </Link>
 
-            <button className="flex items-center gap-2 border border-white px-8 py-3 rounded-xl font-semibold hover:bg-white hover:text-teal-700 transition">
-              Learn More
-              <ArrowRight size={16} />
-            </button>
+           <Link
+  to="/about"
+  className="flex items-center gap-2 border border-white px-8 py-3 rounded-xl font-semibold hover:bg-white hover:text-teal-700 transition"
+>
+  Learn More
+  <ArrowRight size={16} />
+</Link>
 
           </div>
         </div>
