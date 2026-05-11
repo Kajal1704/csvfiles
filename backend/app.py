@@ -42,7 +42,7 @@ model.load_model(MODEL_PATH)
 label_encoder = joblib.load(ENCODER_PATH)
 feature_columns = joblib.load(FEATURE_PATH)
 
-print("✅ Model loaded successfully")
+print("Model loaded successfully")
 
 
 # ============================
@@ -62,15 +62,31 @@ def extract_features(df):
     mutation_detected = int(df["Mutation"].max() > 0.3)
 
     # -------- Pathogenic Detection --------
-    pathogenic_score = (
-        0.6 * df["Conservation_Score"].mean() +
-        0.4 * df["Expression"].mean()
-    )
+    #pathogenic_score = (
+     #   0.6 * df["Conservation_Score"].mean() +
+     #   0.4 * df["Expression"].mean()
+   # )
 
-    clinical_significance = 1 if pathogenic_score > 0.7 else 0
+   
+
+    #clinical_significance = 1 if pathogenic_score > 0.7 else 0
+    pathogenic_score = (
+    0.6 * df["Conservation_Score"].mean() +
+    0.4 * df["Expression"].mean()
+)
+
+    # Pathogenicity only if mutation exists
+    if mutation_detected == 1:
+        clinical_significance = 1 if pathogenic_score > 0.7 else 0
+    else:
+        clinical_significance = 0
 
     # -------- Risk Score --------
-    risk_score = float(df["Expression"].mean())
+    #risk_score = float(df["Expression"].mean())
+    risk_score = (
+    0.4 * df["Expression"].mean()
+    + 0.3 * df["Mutation"].mean()
+    + 0.3 * df["Conservation_Score"].mean())
 
     return [risk_score, mutation_detected, clinical_significance]
 
@@ -102,7 +118,7 @@ async def predict(file: UploadFile = File(...)):
             risk_level = "Low Risk"
 
         # 2️⃣ Benign Mutation
-        elif clinical_significance == 0:
+        elif mutation_detected==1 and clinical_significance == 0:
             disease = "Benign Mutation (No Disease)"
             risk_level = "Low Risk"
 
