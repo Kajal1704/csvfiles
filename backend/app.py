@@ -132,27 +132,30 @@ async def predict(file: UploadFile = File(...)):
             scd_count = genes.count("HBB") + genes.count("HBD")
 
             hd_count = genes.count("HTT")
+        
+            if risk_score < 0.8:
+                risk_level = "Low Risk"
+            elif risk_score < 1.5:
+                risk_level = "Medium Risk"
+            else:
+                risk_level = "High Risk"
 
 # Predict dominant disease
             if hd_count > scd_count and hd_count > cf_count:
                  disease = "Huntington's Disease (HD)"
-                 risk_level = "High Risk"
-
+                
 
             elif scd_count > hd_count and scd_count > cf_count:
                 disease = "Sickle Cell Disease (SCD)"
-                risk_level = "High Risk"
-
+                
 
             elif cf_count > hd_count and cf_count > scd_count:
                 disease = "Cystic Fibrosis (CF)"
-                risk_level = "High Risk"
-
-
+                
             else:
                 prediction = int(model.predict(X)[0])
                 disease = str(label_encoder.inverse_transform([prediction])[0])
-                risk_level = "High Risk"
+                
 
         # Final response
         return {
