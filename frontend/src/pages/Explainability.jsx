@@ -194,14 +194,7 @@ const Explainability = () => {
           Each factor either increases or decreases the chance of disease.
         </p>
 
-        <div className="mt-3 text-base">
-          <span className="text-red-500 font-semibold">
-            Red → pushes toward disease
-          </span><br/>
-          <span className="text-blue-500 font-semibold">
-            Blue → pushes toward normal (no disease)
-          </span>
-        </div>
+        
 
         <p className="text-gray-600 text-base leading-relaxed mt-2">
           Larger bars indicate stronger influence on the final decision.
