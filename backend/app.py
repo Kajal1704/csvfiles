@@ -124,9 +124,35 @@ async def predict(file: UploadFile = File(...)):
 
         # 3️⃣ Pathogenic → Disease Prediction
         else:
-            prediction = int(model.predict(X)[0])
-            disease = str(label_encoder.inverse_transform([prediction])[0])
-            risk_level = "High Risk"
+            genes = list(input_df["Gene_Symbol"].unique())
+
+            
+            cf_count = genes.count("CFTR")
+
+            scd_count = genes.count("HBB") + genes.count("HBD")
+
+            hd_count = genes.count("HTT")
+
+# Predict dominant disease
+            if hd_count > scd_count and hd_count > cf_count:
+                 disease = "Huntington's Disease (HD)"
+                 risk_level = "High Risk"
+
+
+            elif scd_count > hd_count and scd_count > cf_count:
+                disease = "Sickle Cell Disease (SCD)"
+                risk_level = "High Risk"
+
+
+            elif cf_count > hd_count and cf_count > scd_count:
+                disease = "Cystic Fibrosis (CF)"
+                risk_level = "High Risk"
+
+
+            else:
+                prediction = int(model.predict(X)[0])
+                disease = str(label_encoder.inverse_transform([prediction])[0])
+                risk_level = "High Risk"
 
         # Final response
         return {
